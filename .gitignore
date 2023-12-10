@@ -1,0 +1,34 @@
+# Dependency directories
+node_modules/
+
+# Distribution directory
+dist/
+
+# TypeScript build directory
+*.tsbuildinfo
+
+# Visual Studio Code directory
+.vscode/
+
+# npm logs
+npm-debug.log*
+
+# Yarn logs
+yarn-debug.log*
+yarn-error.log*
+
+# TypeScript configuration
+tsconfig.json
+
+# IDE and editor files
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw*
+
+# Mac OS
+.DS_Store
+
+# Windows
+Thumbs.db
