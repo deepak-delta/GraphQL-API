@@ -6,6 +6,7 @@ dist/
 
 # TypeScript build directory
 *.tsbuildinfo
+.env
 
 # Visual Studio Code directory
 .vscode/
@@ -17,8 +18,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# TypeScript configuration
-tsconfig.json
 
 # IDE and editor files
 *.suo
