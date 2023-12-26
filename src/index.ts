@@ -11,6 +11,7 @@ import {
   ApolloServerPluginLandingPageProductionDefault,
 } from 'apollo-server-core'
 import { resolvers } from './resolvers'
+import { connectToDb } from './utils/mongo'
 
 const bootstrap = async () => {
   const schema = await buildSchema({
@@ -40,6 +41,8 @@ const bootstrap = async () => {
   app.listen({ port: 4000 }, () => {
     console.log(`Server sterted on port 4000`)
   })
+
+  connectToDb()
 }
 
 bootstrap()

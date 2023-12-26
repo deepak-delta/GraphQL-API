@@ -1,8 +1,9 @@
-import { getModelForClass, prop } from '@typegoose/typegoose'
+import { getModelForClass, modelOptions, prop } from '@typegoose/typegoose'
 import { IsEmail, MinLength } from 'class-validator'
 import { Field, InputType, ObjectType } from 'type-graphql'
 
 @ObjectType()
+@modelOptions({ schemaOptions: { collection: 'users' } })
 export class User {
   @Field(() => String)
   _id: string
