@@ -1,7 +1,26 @@
-import { getModelForClass, modelOptions, pre, prop } from '@typegoose/typegoose'
+import {
+  QueryMethod,
+  getModelForClass,
+  index,
+  modelOptions,
+  pre,
+  prop,
+} from '@typegoose/typegoose'
 import { IsEmail, MinLength } from 'class-validator'
 import { Field, InputType, ObjectType } from 'type-graphql'
 import bcrypt from 'bcrypt'
+import { AsQueryMethod, ReturnModelType } from '@typegoose/typegoose/lib/types'
+
+function findByEmail(
+  this: ReturnModelType<typeof User, QueryHelpers>,
+  email: User['email']
+) {
+  return this.findOne({ email })
+}
+
+interface QueryHelpers {
+  findByEmail: AsQueryMethod<typeof findByEmail>
+}
 
 //Password hash middleware
 @pre<User>('save', async function () {
@@ -15,6 +34,8 @@ import bcrypt from 'bcrypt'
 
   this.password = hash
 })
+@index({ email: 1 })
+@QueryMethod(findByEmail)
 @ObjectType()
 @modelOptions({ schemaOptions: { collection: 'users' } })
 export class User {
@@ -33,7 +54,7 @@ export class User {
   password: string
 }
 
-export const UserModel = getModelForClass(User)
+export const UserModel = getModelForClass<typeof User, QueryHelpers>(User)
 
 @InputType()
 export class CreateUserInput {
@@ -47,6 +68,15 @@ export class CreateUserInput {
   @MinLength(6, {
     message: 'min 6',
   })
+  @Field(() => String)
+  password: string
+}
+
+@InputType()
+export class LoginInput {
+  @Field(() => String)
+  email: string
+
   @Field(() => String)
   password: string
 }
