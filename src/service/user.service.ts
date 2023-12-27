@@ -1,4 +1,5 @@
 import { ApolloError } from 'apollo-server'
+import bcrypt from 'bcrypt'
 import { CreateUserInput, LoginInput, UserModel } from '../Schema/user.schema'
 import Context from '../types/context'
 
@@ -16,6 +17,11 @@ class UserService {
       throw new ApolloError('Invalid user/passowrd')
     }
     //validate password
+
+    const passowrdIsValid = bcrypt.compare(input.password, user.password)
+    if (!passowrdIsValid) {
+      throw new ApolloError('Invalid user/passowrd')
+    }
     //sign a jwt
     // seta  cookie for thr jwt
     //retrun jwt
