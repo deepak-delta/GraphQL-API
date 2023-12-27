@@ -2,6 +2,7 @@ import { ApolloError } from 'apollo-server'
 import bcrypt from 'bcrypt'
 import { CreateUserInput, LoginInput, UserModel } from '../Schema/user.schema'
 import Context from '../types/context'
+import { signJwt } from '../utils/jwt'
 
 class UserService {
   async createUser(input: CreateUserInput) {
@@ -22,8 +23,13 @@ class UserService {
     if (!passowrdIsValid) {
       throw new ApolloError('Invalid user/passowrd')
     }
+
     //sign a jwt
+
+    const token = signJwt(user)
+
     // seta  cookie for thr jwt
+
     //retrun jwt
   }
 }
